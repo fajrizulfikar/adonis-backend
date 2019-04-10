@@ -21,3 +21,8 @@ Route.group(() => {
   Route.post('products', 'ProductController.store')
   Route.get('products/:id', 'ProductController.show')
 }).prefix('api/v1')
+
+Route.group(() => {
+  Route.get('carts', 'CartController.index')
+  Route.post('carts', 'CartController.store')
+}).prefix('api/v1')

@@ -4,6 +4,9 @@
 const Model = use('Model')
 
 class Product extends Model {
+    // cart() {
+    //     return this.belongsTo('App/Models/Cart')
+    // }
     static get table () {
         return 'product'
     }
