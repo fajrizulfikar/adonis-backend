@@ -1,7 +1,5 @@
 'use strict'
 
-const Database = use('Database')
-
 const Cart = use('App/Models/Cart')
 
 class CartController {
@@ -14,7 +12,6 @@ class CartController {
             .on('product.id', 'cart.product_id')
         })
         .fetch()
-
         return response.json(carts)
 
 
