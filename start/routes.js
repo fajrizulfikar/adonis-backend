@@ -17,8 +17,9 @@
 const Route = use('Route')
 
 Route.group(() => {
-  Route.get('products', 'ProductController.index')
-  Route.post('products', 'ProductController.store')
+  Route.resource('products', 'ProductController').only(['index', 'store'])
+  // Route.get('products', 'ProductController.index')
+  // Route.post('products', 'ProductController.store')
   Route.get('products/:id', 'ProductController.show')
 }).prefix('api/v1')
 
