@@ -11,9 +11,12 @@ class Cart extends Model {
         return 'cart'
     }
 
-    // static get primaryKey() {
-    //     return 'id'
+    // static get foreignKey() {
+    //     return 'product_id'
     // }
+    static get primaryKey() {
+        return 'id'
+    }
 }
 
 module.exports = Cart

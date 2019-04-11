@@ -20,9 +20,5 @@ Route.group(() => {
   Route.resource('products', 'ProductController').only(['index', 'store'])
   Route.get('products/:id', 'ProductController.show')
   Route.resource('carts', 'CartController').only(['index', 'store'])
+  Route.patch('carts/:product_id', 'CartController.update')
 }).prefix('api/v1')
-
-// Route.group(() => {
-//   Route.get('carts', 'CartController.index')
-//   Route.post('carts', 'CartController.store')
-// }).prefix('api/v1')
