@@ -5,17 +5,17 @@ const Cart = use('App/Models/Cart')
 class CartController {
     async index({ response }) {
         let carts = await Cart
-        .query()
-        .table('product')
-        .innerJoin('cart', function () {
-            this
-            .on('product.id', 'cart.product_id')
-        })
-        .fetch()
+            .query()
+            .table('product')
+            .innerJoin('cart', function () {
+                this
+                    .on('product.id', 'cart.product_id')
+            })
+            .fetch()
         return response.json(carts)
     }
 
-    async store({request, response}) {
+    async store({ request, response }) {
         const cartInfo = request.only(['product_id', 'qty', 'price'])
 
         const cart = new Cart()
@@ -28,17 +28,29 @@ class CartController {
         return response.status(201).json(cart)
     }
 
-    async update({params, request, response}) {
+    async update({ params, request, response }) {
         const qty = request.input('qty')
 
-        let cart = await Cart
-        .query()
-        .where({product_id: params.product_id})
-        .update({qty: qty})
+        if (qty < 1) {
+            let cart = await Cart
+                .query()
+                .where({ product_id: params.product_id })
+                .update({ qty: 1 })
+        } else {
+            let cart = await Cart
+                .query()
+                .where({ product_id: params.product_id })
+                .update({ qty: qty })
+        }
 
-        let cartResponse = await Cart.query().where({product_id: params.product_id}).fetch()
+        let carts = await Cart
+            .query()
+            .table('product')
+            .innerJoin('cart', 'product.id', 'cart.product_id')
+            // .where({product_id: params.product_id})
+            .fetch()
 
-        return response.json(cartResponse)
+        return response.json(carts)
     }
 }
 
