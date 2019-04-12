@@ -12,7 +12,16 @@ class CartController {
                     .on('product.id', 'cart.product_id')
             })
             .fetch()
-        return response.json(carts)
+
+        let totalPrice = 0
+            
+        let cartList = await Cart.all()
+        let cartListJSON = cartList.toJSON()
+        cartListJSON.map(cart => {
+            return totalPrice += cart.qty * cart.price
+        })
+
+        return response.json({ carts: carts, totalPrice: totalPrice})
     }
 
     async store({ request, response }) {
@@ -54,13 +63,11 @@ class CartController {
     }
 
     async destroy({ params, response }) {
-        console.log(params.product_id)
+        // console.log(params.product_id)
         let cart = await Cart
-        .query()
-        .where('product_id', params.product_id)
-        .delete()
-            // .findBy("product_id", params.product_id)
-            // .delete()
+            .query()
+            .where('product_id', params.product_id)
+            .delete()
 
         let carts = await Cart
             .query()
