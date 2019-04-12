@@ -52,6 +52,24 @@ class CartController {
 
         return response.json(carts)
     }
+
+    async destroy({ params, response }) {
+        console.log(params.product_id)
+        let cart = await Cart
+        .query()
+        .where('product_id', params.product_id)
+        .delete()
+            // .findBy("product_id", params.product_id)
+            // .delete()
+
+        let carts = await Cart
+            .query()
+            .table('product')
+            .innerJoin('cart', 'product.id', 'cart.product_id')
+            .fetch()
+
+        return response.json(carts)
+    }
 }
 
 module.exports = CartController

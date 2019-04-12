@@ -17,8 +17,12 @@
 const Route = use('Route')
 
 Route.group(() => {
-  Route.resource('products', 'ProductController').only(['index', 'store'])
-  Route.get('products/:id', 'ProductController.show')
+  Route.resource('products', 'ProductController')
+  // Route.resource('products', 'ProductController').only(['index', 'store'])
+  // Route.get('products/:id', 'ProductController.show')
+  // Route.resource('carts', 'CartController')
   Route.resource('carts', 'CartController').only(['index', 'store'])
+  // Route.resource('carts/:product_id', 'CartController').only(['update', 'destroy'])
   Route.patch('carts/:product_id', 'CartController.update')
+  Route.delete('carts/:product_id', 'CartController.destroy')
 }).prefix('api/v1')
