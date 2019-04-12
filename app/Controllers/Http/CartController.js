@@ -14,14 +14,14 @@ class CartController {
             .fetch()
 
         let totalPrice = 0
-            
+
         let cartList = await Cart.all()
         let cartListJSON = cartList.toJSON()
         cartListJSON.map(cart => {
             return totalPrice += cart.qty * cart.price
         })
 
-        return response.json({ carts: carts, totalPrice: totalPrice})
+        return response.json({ carts: carts, totalPrice: totalPrice })
     }
 
     async store({ request, response }) {
@@ -59,7 +59,16 @@ class CartController {
             // .where({product_id: params.product_id})
             .fetch()
 
-        return response.json(carts)
+        let totalPrice = 0
+
+        let cartList = await Cart.all()
+        let cartListJSON = cartList.toJSON()
+        cartListJSON.map(cart => {
+            return totalPrice += cart.qty * cart.price
+        })
+
+        return response.json({ carts: carts, totalPrice: totalPrice })
+        // return response.json(carts)
     }
 
     async destroy({ params, response }) {
@@ -75,7 +84,16 @@ class CartController {
             .innerJoin('cart', 'product.id', 'cart.product_id')
             .fetch()
 
-        return response.json(carts)
+        let totalPrice = 0
+
+        let cartList = await Cart.all()
+        let cartListJSON = cartList.toJSON()
+        cartListJSON.map(cart => {
+            return totalPrice += cart.qty * cart.price
+        })
+
+        return response.json({ carts: carts, totalPrice: totalPrice })
+        // return response.json(carts)
     }
 }
 
