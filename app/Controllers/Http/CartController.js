@@ -25,9 +25,10 @@ class CartController {
     }
 
     async store({ request, response }) {
-        const cartInfo = request.only(['product_id', 'qty', 'price'])
+        const cartInfo = request.only(['user_id', 'product_id', 'qty', 'price'])
 
         const cart = new Cart()
+        cart.user_id = cartInfo.user_id
         cart.product_id = cartInfo.product_id
         cart.qty = cartInfo.qty
         cart.price = cartInfo.price
