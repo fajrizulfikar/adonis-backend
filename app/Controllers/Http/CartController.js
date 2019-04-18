@@ -35,7 +35,14 @@ class CartController {
 
         await cart.save()
 
-        return response.status(201).json(cart)
+        let carts = await Cart
+            .query()
+            .table('product')
+            .innerJoin('cart', 'product.id', 'cart.product_id')
+            .where({ product_id: cart.product_id })
+            .fetch()
+
+        return response.status(201).json(carts)
     }
 
     async update({ params, request, response }) {
