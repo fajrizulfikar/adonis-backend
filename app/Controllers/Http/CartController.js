@@ -51,12 +51,14 @@ class CartController {
         if (qty < 1) {
             let cart = await Cart
                 .query()
-                .where({ product_id: params.product_id })
+                .where('cart.id', params.id)
+                // .where({ id: params.id })
                 .update({ qty: 1 })
         } else {
             let cart = await Cart
                 .query()
-                .where({ product_id: params.product_id })
+                .where('cart.id', params.id)
+                // .where({ id: params.id })
                 .update({ qty: qty })
         }
 
@@ -64,23 +66,23 @@ class CartController {
             .query()
             .table('product')
             .innerJoin('cart', 'product.id', 'cart.product_id')
-            // .where({product_id: params.product_id})
+            .where('cart.id', params.id)
             .fetch()
 
-        let totalPrice = 0
+        return response.status(201).json(carts)
 
-        let cartList = await Cart.all()
-        let cartListJSON = cartList.toJSON()
-        cartListJSON.map(cart => {
-            return totalPrice += cart.qty * cart.price
-        })
+        // let totalPrice = 0
 
-        return response.json({ carts: carts, totalPrice: totalPrice })
-        // return response.json(carts)
+        // let cartList = await Cart.all()
+        // let cartListJSON = cartList.toJSON()
+        // cartListJSON.map(cart => {
+        //     return totalPrice += cart.qty * cart.price
+        // })
+
+        // return response.json({ carts: carts, totalPrice: totalPrice })
     }
 
     async destroy({ params, response }) {
-        // console.log(params.product_id)
         let cart = await Cart
             .query()
             .where('product_id', params.product_id)
