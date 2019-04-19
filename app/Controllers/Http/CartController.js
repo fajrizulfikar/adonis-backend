@@ -52,13 +52,11 @@ class CartController {
             let cart = await Cart
                 .query()
                 .where('cart.id', params.id)
-                // .where({ id: params.id })
                 .update({ qty: 1 })
         } else {
             let cart = await Cart
                 .query()
                 .where('cart.id', params.id)
-                // .where({ id: params.id })
                 .update({ qty: qty })
         }
 
@@ -70,16 +68,6 @@ class CartController {
             .fetch()
 
         return response.status(201).json(carts)
-
-        // let totalPrice = 0
-
-        // let cartList = await Cart.all()
-        // let cartListJSON = cartList.toJSON()
-        // cartListJSON.map(cart => {
-        //     return totalPrice += cart.qty * cart.price
-        // })
-
-        // return response.json({ carts: carts, totalPrice: totalPrice })
     }
 
     async destroy({ params, response }) {
