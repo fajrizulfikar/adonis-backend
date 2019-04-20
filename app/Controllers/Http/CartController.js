@@ -67,7 +67,16 @@ class CartController {
             .where('cart.id', params.id)
             .fetch()
 
-        return response.status(201).json(carts)
+        let totalPrice = 0
+
+        let cartList = await Cart.all()
+        let cartListJSON = cartList.toJSON()
+        cartListJSON.map(cart => {
+            return totalPrice += cart.qty * cart.price
+        })
+
+        return response.json({ carts: carts, totalPrice: totalPrice })
+        // return response.status(201).json(carts)
     }
 
     async destroy({ params, response }) {
