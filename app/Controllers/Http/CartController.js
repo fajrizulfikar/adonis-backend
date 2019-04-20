@@ -82,7 +82,8 @@ class CartController {
     async destroy({ params, response }) {
         let cart = await Cart
             .query()
-            .where('product_id', params.product_id)
+            .where('cart.id', params.id)
+            // .where('product_id', params.product_id)
             .delete()
 
         let carts = await Cart
