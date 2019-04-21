@@ -19,4 +19,6 @@ const Route = use('Route')
 Route.group(() => {
   Route.resource('products', 'ProductController')
   Route.resource('carts', 'CartController')
+  Route.post('register', 'AuthController.register')
+  Route.post('login', 'AuthController.login')
 }).prefix('api/v1')
