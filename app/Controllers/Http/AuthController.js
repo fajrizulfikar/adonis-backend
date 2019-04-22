@@ -20,13 +20,24 @@ class AuthController {
         const email = request.input('email')
         const password = request.input('password')
         console.log(email, password);
-        
+
         try {
             if (await auth.attempt(email, password)) {
                 let user = await User.findBy('email', email)
                 let accessToken = await auth.generate(user)
                 return response.json({ 'user': user, 'access_token': accessToken })
             }
+        } catch (e) {
+            console.log(e);
+            return response.status(400).send({ 'message': 'Something went wrong!' })
+        }
+    }
+
+    async show({ params, auth, response }) {
+        try {
+            const {id} = params 
+            const user = await User.find(id)
+            return response.json({'user': user})
         } catch (e) {
             console.log(e);
             return response.status(400).send({ 'message': 'Something went wrong!' })
