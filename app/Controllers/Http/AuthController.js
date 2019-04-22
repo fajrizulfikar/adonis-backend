@@ -33,7 +33,7 @@ class AuthController {
         }
     }
 
-    async show({ params, auth, response }) {
+    async show({ params, response }) {
         try {
             const {id} = params 
             const user = await User.find(id)
